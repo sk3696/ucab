@@ -1,0 +1,22 @@
+[
+  {
+    "user": {
+      "name": "Persist User",
+      "email": "persistuser@ucab.com",
+      "password": "$2a$10$ELfvLPjopiUTF8LSRW0Uf.wxdf8vDlu8774leUNTrQfZiOg0JDuhy",
+      "role": "user",
+      "status": "approved"
+    },
+    "driver": null
+  },
+  {
+    "user": {
+      "name": "sree",
+      "email": "sreevanthkonatham@gmail.com",
+      "password": "$2a$10$Mij8Ylsxxv2dHdT8CdaxKuuRDGX3Ji530x/068Ps9Cbn4vZTRYxSG",
+      "role": "user",
+      "status": "approved"
+    },
+    "driver": null
+  }
+]
