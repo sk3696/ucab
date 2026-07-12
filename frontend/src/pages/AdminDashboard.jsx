@@ -20,7 +20,7 @@ export const AdminDashboard = () => {
   // Fetch all stats
   const fetchAdminStats = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/stats');
+      const res = await axios.get('/api/admin/stats');
       setStats(res.data);
     } catch (err) {
       console.error(err);
@@ -30,7 +30,7 @@ export const AdminDashboard = () => {
   // Fetch pending verification drivers
   const fetchPendingDrivers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/drivers/pending');
+      const res = await axios.get('/api/admin/drivers/pending');
       setPendingDrivers(res.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +40,7 @@ export const AdminDashboard = () => {
   // Fetch all rides logs
   const fetchAllRides = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/rides');
+      const res = await axios.get('/api/admin/rides');
       setAllRides(res.data);
     } catch (err) {
       console.error(err);
@@ -50,7 +50,7 @@ export const AdminDashboard = () => {
   // Fetch support tickets
   const fetchTickets = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/tickets');
+      const res = await axios.get('/api/admin/tickets');
       setTickets(res.data);
     } catch (err) {
       console.error(err);
@@ -60,7 +60,7 @@ export const AdminDashboard = () => {
   // Approve driver
   const handleApproveDriver = async (driverId) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/driver/${driverId}/approve`);
+      await axios.put(`/api/admin/driver/${driverId}/approve`);
       fetchPendingDrivers();
       fetchAdminStats();
     } catch (err) {
@@ -71,7 +71,7 @@ export const AdminDashboard = () => {
   // Reject driver
   const handleRejectDriver = async (driverId) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/driver/${driverId}/reject`);
+      await axios.put(`/api/admin/driver/${driverId}/reject`);
       fetchPendingDrivers();
       fetchAdminStats();
     } catch (err) {
@@ -84,7 +84,7 @@ export const AdminDashboard = () => {
     const reply = ticketReplies[ticketId];
     if (!reply) return;
     try {
-      await axios.put(`http://localhost:5000/api/admin/tickets/${ticketId}/reply`, {
+      await axios.put(`/api/admin/tickets/${ticketId}/reply`, {
         reply
       });
       setTicketReplies((prev) => ({ ...prev, [ticketId]: '' }));

@@ -29,7 +29,7 @@ export const DriverDashboard = () => {
   const fetchDriverInfo = async () => {
     try {
       await loadUser();
-      const res = await axios.get('http://localhost:5000/api/driver/earnings');
+      const res = await axios.get('/api/driver/earnings');
       setEarnings(res.data);
       setIsOnline(res.data.isOnline);
     } catch (err) {
@@ -41,7 +41,7 @@ export const DriverDashboard = () => {
   const handleToggleOnline = async () => {
     setError('');
     try {
-      const res = await axios.put('http://localhost:5000/api/driver/status', {
+      const res = await axios.put('/api/driver/status', {
         isOnline: !isOnline
       });
       setIsOnline(res.data.isOnline);
@@ -58,7 +58,7 @@ export const DriverDashboard = () => {
       return;
     }
     try {
-      const res = await axios.get('http://localhost:5000/api/ride/incoming');
+      const res = await axios.get('/api/ride/incoming');
       setIncomingRides(res.data);
     } catch (err) {
       console.error('Error fetching incoming requests:', err);
@@ -68,7 +68,7 @@ export const DriverDashboard = () => {
   // Fetch active ride
   const checkActiveRide = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/ride/active');
+      const res = await axios.get('/api/ride/active');
       if (res.data && res.data.ride) {
         setActiveRide(res.data.ride);
         setActivePassenger(res.data.ride.user);
@@ -90,7 +90,7 @@ export const DriverDashboard = () => {
   const handleAcceptRide = async (rideId) => {
     setError('');
     try {
-      await axios.put(`http://localhost:5000/api/ride/${rideId}/accept`);
+      await axios.put(`/api/ride/${rideId}/accept`);
       checkActiveRide();
     } catch (err) {
       setError(err.response?.data?.message || 'Could not accept ride');
@@ -105,7 +105,7 @@ export const DriverDashboard = () => {
       if (status === 'started') {
         payload.driverRouteIndex = 0;
       }
-      const res = await axios.put(`http://localhost:5000/api/ride/${activeRide._id}/status`, payload);
+      const res = await axios.put(`/api/ride/${activeRide._id}/status`, payload);
       setActiveRide(res.data);
       
       if (status === 'started') {
@@ -131,7 +131,7 @@ export const DriverDashboard = () => {
       currentIndex += 1;
       if (currentIndex <= 30) {
         try {
-          const res = await axios.put(`http://localhost:5000/api/ride/${rideId}/status`, {
+          const res = await axios.put(`/api/ride/${rideId}/status`, {
             driverRouteIndex: currentIndex
           });
           setActiveRide(res.data);

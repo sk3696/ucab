@@ -270,7 +270,7 @@ export const UserDashboard = () => {
     if (!userLocation || !dest) return;
     setLoadingEstimate(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/ride/estimate', {
+      const res = await axios.post('/api/ride/estimate', {
         pickup: { address: userLocation.address, lat: userLocation.lat, lng: userLocation.lng },
         dropoff: { address: dest.address, lat: dest.lat, lng: dest.lng }
       });
@@ -297,7 +297,7 @@ export const UserDashboard = () => {
     
     try {
       const fare = estimates[vehicleType];
-      const res = await axios.post('http://localhost:5000/api/ride/request', {
+      const res = await axios.post('/api/ride/request', {
         pickupLocation: { address: userLocation.address, lat: userLocation.lat, lng: userLocation.lng },
         dropoffLocation: { address: selectedDestination.address, lat: selectedDestination.lat, lng: selectedDestination.lng },
         fare,
@@ -330,7 +330,7 @@ export const UserDashboard = () => {
         setIsMatching(false);
         
         try {
-          const res = await axios.put(`http://localhost:5000/api/ride/${rideId}/simulate-next`);
+          const res = await axios.put(`/api/ride/${rideId}/simulate-next`);
           setActiveRide(res.data);
           
           startRideProgressionTicks(rideId);
@@ -348,7 +348,7 @@ export const UserDashboard = () => {
     rideProgressIntervalRef.current = setInterval(async () => {
       stepCount += 1;
       try {
-        const res = await axios.put(`http://localhost:5000/api/ride/${rideId}/simulate-next`);
+        const res = await axios.put(`/api/ride/${rideId}/simulate-next`);
         setActiveRide(res.data);
 
         if (res.data.status === 'completed') {
@@ -379,7 +379,7 @@ export const UserDashboard = () => {
           setUpiStep('loading');
           setTimeout(async () => {
             try {
-              const res = await axios.post('http://localhost:5000/api/payment/process', {
+              const res = await axios.post('/api/payment/process', {
                 rideId,
                 paymentMethod: 'upi'
               });
@@ -406,7 +406,7 @@ export const UserDashboard = () => {
     
     if (!activeRide) return;
     try {
-      await axios.put(`http://localhost:5000/api/ride/${activeRide._id}/cancel`);
+      await axios.put(`/api/ride/${activeRide._id}/cancel`);
       setActiveRide(null);
       setDriverProfile(null);
       setPaymentSuccess(false);
@@ -427,7 +427,7 @@ export const UserDashboard = () => {
     const finalMethod = methodOverride || paymentMethod;
     setPaymentProcessing(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/payment/process', {
+      const res = await axios.post('/api/payment/process', {
         rideId: activeRide._id,
         paymentMethod: finalMethod
       });
@@ -454,7 +454,7 @@ export const UserDashboard = () => {
 
   const fetchReceipt = async (rideId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/payment/receipt/${rideId}`);
+      const res = await axios.get(`/api/payment/receipt/${rideId}`);
       setReceipt(res.data);
     } catch (err) {
       console.error(err);
@@ -475,7 +475,7 @@ export const UserDashboard = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/ride/history');
+      const res = await axios.get('/api/ride/history');
       setHistory(res.data);
     } catch (err) {
       console.error(err);
@@ -486,7 +486,7 @@ export const UserDashboard = () => {
     e.preventDefault();
     if (!supportSubject || !supportMessage) return;
     try {
-      await axios.post('http://localhost:5000/api/support/ticket', {
+      await axios.post('/api/support/ticket', {
         subject: supportSubject,
         message: supportMessage
       });
@@ -502,7 +502,7 @@ export const UserDashboard = () => {
 
   const fetchTickets = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/support/tickets');
+      const res = await axios.get('/api/support/tickets');
       setSupportTickets(res.data);
     } catch (err) {
       console.error(err);
@@ -512,7 +512,7 @@ export const UserDashboard = () => {
   const checkActiveRidePoll = async () => {
     if (isMatching || rideProgressIntervalRef.current || checkoutIntervalRef.current) return;
     try {
-      const res = await axios.get('http://localhost:5000/api/ride/active');
+      const res = await axios.get('/api/ride/active');
       if (res.data) {
         setActiveRide(res.data.ride);
         setDriverProfile(res.data.driverProfile);
