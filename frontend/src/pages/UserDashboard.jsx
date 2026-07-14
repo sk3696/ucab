@@ -11,20 +11,54 @@ import translations from '../utils/translations';
 
 // Predefined database representing Google Maps Places Autocomplete suggestions for Andhra Pradesh
 const MOCK_GOOGLE_PLACES = [
+  // Vijayawada
   { name: "Benz Circle, Vijayawada", address: "MG Road, Benz Circle, Vijayawada, AP", lat: 16.5000, lng: 80.6499 },
   { name: "Vijayawada Junction Railway Station", address: "Station Road, Hanumanpet, Vijayawada, AP", lat: 16.5165, lng: 80.6200 },
   { name: "RTC Central Bus Station, Vijayawada", address: "Governorpet, Vijayawada, AP", lat: 16.5100, lng: 80.6280 },
+  { name: "PVP Square Mall, Vijayawada", address: "MG Road, Labbipet, Vijayawada, AP", lat: 16.5065, lng: 80.6380 },
+  { name: "Kanaka Durga Temple, Vijayawada", address: "Indrakeeladri Mall Road, Vijayawada, AP", lat: 16.5150, lng: 80.6050 },
+  { name: "Gollapudi One Center, Vijayawada", address: "Gollapudi Bypass Road, Vijayawada, AP", lat: 16.5390, lng: 80.5790 },
+
+  // Visakhapatnam
   { name: "Dwaraka Nagar, Visakhapatnam", address: "Dwaraka Nagar Main Rd, Vizag, AP", lat: 17.7262, lng: 83.3100 },
   { name: "Visakhapatnam Railway Station", address: "Gnanapuram, Visakhapatnam, AP", lat: 17.7289, lng: 83.2980 },
   { name: "RTC Complex, Visakhapatnam", address: "Dwaraka Nagar, Vizag, AP", lat: 17.7275, lng: 83.3080 },
-  { name: "Tirumala Hill Temple, Tirupati", address: "Tirumala Hills, Tirupati, AP", lat: 13.6780, lng: 79.3500 },
-  { name: "Tirupati Junction Railway Station", address: "Tirupati Center, AP", lat: 13.6268, lng: 79.4120 },
+  { name: "RK Beach (Ramakrishna Beach), Visakhapatnam", address: "Beach Road, Visakhapatnam, AP", lat: 17.7144, lng: 83.3230 },
+  { name: "Gajuwaka Junction, Visakhapatnam", address: "Gajuwaka Center, Visakhapatnam, AP", lat: 17.6890, lng: 83.2080 },
+  { name: "Rushikonda Beach, Visakhapatnam", address: "Rushikonda Beach Road, Visakhapatnam, AP", lat: 17.7815, lng: 83.3850 },
+
+  // Guntur
   { name: "Broadipet, Guntur", address: "Broadipet Main Rd, Guntur, AP", lat: 16.3115, lng: 80.4420 },
   { name: "Guntur Railway Station", address: "East Guntur, AP", lat: 16.2990, lng: 80.4500 },
-  { name: "Nellore RTC Bus Stand", address: "Nellore RTC Colony, Nellore, AP", lat: 14.4480, lng: 79.9820 },
-  { name: "Eluru Old Bus Stand", address: "Eluru Town Center, AP", lat: 16.7110, lng: 81.1040 },
+  { name: "RTC Bus Stand, Guntur", address: "Guntur NTR Bus Station, AP", lat: 16.3020, lng: 80.4440 },
+  { name: "Gorantla Area, Guntur", address: "Gorantla Highway Junction, Guntur, AP", lat: 16.3260, lng: 80.4120 },
+
+  // Kakinada
+  { name: "Kakinada Port", address: "Port Area, Kakinada, AP", lat: 16.9890, lng: 82.2470 },
+  { name: "Kakinada Town Railway Station", address: "Railway Station Road, Kakinada, AP", lat: 16.9602, lng: 82.2360 },
+  { name: "Kakinada RTC Complex", address: "Main Road, Kakinada Center, AP", lat: 16.9585, lng: 82.2395 },
+  { name: "SRMT Mall & Multiplex, Kakinada", address: "Ramanayyapeta, Kakinada, AP", lat: 16.9740, lng: 82.2370 },
+  { name: "Bhanugudi Junction, Kakinada", address: "Bhanugudi Main Circle, Kakinada, AP", lat: 16.9670, lng: 82.2350 },
+  { name: "JNTUK College of Engineering, Kakinada", address: "Pithapuram Road, Kakinada, AP", lat: 16.9775, lng: 82.2425 },
+
+  // Rajahmundry
   { name: "Rajahmundry Pushkar Ghat", address: "Godavari River Road, Rajahmundry, AP", lat: 17.0010, lng: 81.7770 },
-  { name: "Kakinada Port", address: "Port Area, Kakinada, AP", lat: 16.9890, lng: 82.2470 }
+  { name: "Rajahmundry Railway Station", address: "Railway Station Rd, Rajahmundry, AP", lat: 16.9915, lng: 81.7850 },
+  { name: "Kotipalli Bus Stand, Rajahmundry", address: "Kotipalli Road, Rajahmundry, AP", lat: 16.9980, lng: 81.7820 },
+  { name: "Morampudi Junction, Rajahmundry", address: "Morampudi Highway Circle, Rajahmundry, AP", lat: 17.0180, lng: 81.8040 },
+
+  // Tirupati
+  { name: "Tirumala Hill Temple, Tirupati", address: "Tirumala Hills, Tirupati, AP", lat: 13.6780, lng: 79.3500 },
+  { name: "Tirupati Junction Railway Station", address: "Tirupati Center, AP", lat: 13.6268, lng: 79.4120 },
+  { name: "Alipiri Bus Station, Tirupati", address: "Alipiri Toll Gate Road, Tirupati, AP", lat: 13.6550, lng: 79.4020 },
+
+  // Nellore
+  { name: "Nellore RTC Bus Stand", address: "Nellore RTC Colony, Nellore, AP", lat: 14.4480, lng: 79.9820 },
+  { name: "Nellore Railway Station", address: "Station Rd, Nellore, AP", lat: 14.4530, lng: 79.9880 },
+
+  // Eluru
+  { name: "Eluru Old Bus Stand", address: "Eluru Town Center, AP", lat: 16.7110, lng: 81.1040 },
+  { name: "Eluru Railway Station", address: "Railway Colony, Eluru, AP", lat: 16.7180, lng: 81.1220 }
 ];
 
 export const UserDashboard = () => {
