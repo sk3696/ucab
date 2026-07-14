@@ -273,7 +273,7 @@ export const UserDashboard = () => {
   };
 
   // Handle Google Maps Autocomplete Search input changes
-  const handleGoogleSearchChange = (e) => {
+  const handleGoogleSearchChange = async (e) => {
     const val = e.target.value;
     setGoogleSearchQuery(val);
     if (!val) {
@@ -282,13 +282,51 @@ export const UserDashboard = () => {
       return;
     }
 
-    // Filter suggestions based on input keys
+    // 1. Instant mock suggestions
     const filtered = MOCK_GOOGLE_PLACES.filter(place => 
       place.name.toLowerCase().includes(val.toLowerCase()) || 
       place.address.toLowerCase().includes(val.toLowerCase())
     );
     setGoogleSuggestions(filtered);
     setShowGoogleDropdown(true);
+
+    // 2. Fetch live global coordinates from Nominatim
+    if (val.trim().length > 2) {
+      try {
+        const queryLanguage = language === 'en' ? 'en' : 'te';
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(val)}&countrycodes=in&limit=8&accept-language=${queryLanguage}`
+        );
+        const data = await response.json();
+        if (data && data.length > 0) {
+          const resolved = data.map(item => {
+            const namePart = item.display_name.split(',')[0];
+            return {
+              name: `📍 ${namePart}`,
+              address: item.display_name,
+              lat: parseFloat(item.lat),
+              lng: parseFloat(item.lon)
+            };
+          });
+
+          // Prevent duplicates
+          setGoogleSuggestions(prev => {
+            const combined = [...prev];
+            resolved.forEach(remote => {
+              if (!combined.some(local => 
+                Math.abs(local.lat - remote.lat) < 0.0001 && 
+                Math.abs(local.lng - remote.lng) < 0.0001
+              )) {
+                combined.push(remote);
+              }
+            });
+            return combined.slice(0, 10);
+          });
+        }
+      } catch (err) {
+        console.warn('Nominatim autocomplete search failed:', err);
+      }
+    }
   };
 
   // Select place from Google Suggestions dropdown
@@ -1128,6 +1166,7 @@ export const UserDashboard = () => {
                       nearbyDrivers={nearbyDrivers}
                       vehicleType={vehicleType}
                       onMapClick={handleMapClick}
+                      language={language}
                     />
                     <div style={{ position: 'absolute', bottom: '15px', right: '15px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '5px 10px', borderRadius: '5px', zIndex: 10, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       {nearbyDrivers.length} cabs nearby

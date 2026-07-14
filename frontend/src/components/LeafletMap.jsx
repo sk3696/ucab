@@ -34,7 +34,7 @@ const NEARBY_CAB_SVG = `
   </svg>
 `;
 
-export const LeafletMap = ({ pickup, dropoff, driverRouteIndex, status, nearbyDrivers = [], vehicleType = 'economy', onMapClick }) => {
+export const LeafletMap = ({ pickup, dropoff, driverRouteIndex, status, nearbyDrivers = [], vehicleType = 'economy', onMapClick, language }) => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const pickupMarkerRef = useRef(null);
@@ -187,7 +187,24 @@ export const LeafletMap = ({ pickup, dropoff, driverRouteIndex, status, nearbyDr
       if (dropoffMarkerRef.current) {
         dropoffMarkerRef.current.setLatLng([dropoff.lat, dropoff.lng]);
       } else {
-        dropoffMarkerRef.current = L.marker([dropoff.lat, dropoff.lng], { icon: dropoffIcon }).addTo(map);
+        dropoffMarkerRef.current = L.marker([dropoff.lat, dropoff.lng], { 
+          icon: dropoffIcon,
+          draggable: true 
+        }).addTo(map);
+
+        // Bind tooltip to remind user they can drag it
+        dropoffMarkerRef.current.bindTooltip(language === 'te' ? "గమ్యస్థానాన్ని మార్చడానికి నన్ను లాగండి" : "Drag me to change destination", {
+          permanent: false,
+          direction: 'top'
+        });
+
+        // Trigger onMapClick update when drag ends
+        dropoffMarkerRef.current.on('dragend', (e) => {
+          const { lat, lng } = e.target.getLatLng();
+          if (onMapClick) {
+            onMapClick(lat, lng);
+          }
+        });
       }
       bounds.push([dropoff.lat, dropoff.lng]);
     } else if (dropoffMarkerRef.current) {
