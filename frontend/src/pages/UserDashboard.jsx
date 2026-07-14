@@ -90,6 +90,7 @@ export const UserDashboard = () => {
   const [activeRide, setActiveRide] = useState(null);
   const [driverProfile, setDriverProfile] = useState(null);
   const [rideLoading, setRideLoading] = useState(true);
+  const [driverMessage, setDriverMessage] = useState('');
 
   // Matchmaking Simulation Timer
   const [isMatching, setIsMatching] = useState(false);
@@ -404,6 +405,7 @@ export const UserDashboard = () => {
         try {
           const res = await axios.put(`/api/ride/${rideId}/simulate-next`);
           setActiveRide(res.data);
+          setDriverMessage(language === 'te' ? "నేను మీ రైడ్ అభ్యర్థనను అంగీకరించాను! మీ లొకేషన్‌కి వస్తున్నాను. 👍" : "Accepted your request! On my way to your pickup spot. 👍");
           
           startRideProgressionTicks(rideId);
         } catch (err) {
@@ -423,7 +425,14 @@ export const UserDashboard = () => {
         const res = await axios.put(`/api/ride/${rideId}/simulate-next`);
         setActiveRide(res.data);
 
+        if (res.data.status === 'arrived') {
+          setDriverMessage(language === 'te' ? "నేను మీ పికప్ పాయింట్‌కి చేరుకున్నాను. దయచేసి లోపలికి రండి. 🚗" : "I have arrived at your pickup spot. Please step inside. 🚗");
+        } else if (res.data.status === 'started') {
+          setDriverMessage(language === 'te' ? "ప్రయాణం ప్రారంభమైంది. మీ గమ్యస్థానానికి వెళ్తున్నాము. 🛣️" : "Trip started. Heading to your destination now. 🛣️");
+        }
+
         if (res.data.status === 'completed') {
+          setDriverMessage('');
           clearInterval(rideProgressIntervalRef.current);
           rideProgressIntervalRef.current = null;
           
@@ -1160,7 +1169,9 @@ export const UserDashboard = () => {
 
                 {/* Map Display Card */}
                 <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '520px', padding: '0.5rem' }}>
-                  <div style={{ flex: 1, position: 'relative' }}>
+                  <div style={{ flex: 1, position: 'relative', overflow: 'hidden', borderRadius: 'inherit' }}>
+                    {isMatching && <div className="matching-radar-pulse"></div>}
+
                     {import.meta.env.VITE_GOOGLE_MAPS_API_KEY ? (
                       <GoogleMapComponent
                         pickup={userLocation} 
@@ -1183,6 +1194,79 @@ export const UserDashboard = () => {
                         driverRouteIndex={activeRide?.driverRouteIndex}
                       />
                     )}
+
+                    {/* Floating Glassmorphic Active Driver HUD Overlay */}
+                    {activeRide && (activeRide.status === 'accepted' || activeRide.status === 'arrived' || activeRide.status === 'started') && (
+                      <div className="glass-panel" style={{
+                        position: 'absolute',
+                        top: '15px',
+                        right: '15px',
+                        width: '260px',
+                        padding: '0.75rem 1rem',
+                        zIndex: 15,
+                        background: 'rgba(10, 15, 29, 0.75)',
+                        backdropFilter: 'blur(12px)',
+                        border: '1px solid var(--primary)',
+                        boxShadow: '0 8px 32px rgba(0, 242, 254, 0.2)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.5rem',
+                        borderRadius: 'var(--radius-sm)'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            {activeRide.status === 'accepted' ? (language === 'te' ? 'డ్రైవర్ వస్తున్నారు' : 'Driver Approaching') :
+                             activeRide.status === 'arrived' ? (language === 'te' ? 'డ్రైవర్ వచ్చారు' : 'Driver Arrived') :
+                             (language === 'te' ? 'ప్రయాణంలో ఉన్నారు' : 'In Transit')}
+                          </span>
+                          <span style={{
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            background: activeRide.status === 'arrived' ? '#00e676' : 'var(--primary)',
+                            boxShadow: activeRide.status === 'arrived' ? '0 0 8px #00e676' : '0 0 8px var(--primary)',
+                            animation: 'pulse 1.5s infinite'
+                          }}></span>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '0.4rem', marginTop: '0.2rem' }}>
+                          <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem' }}>
+                            👨‍✈️
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-main)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                              {activeRide.driverId?.name || (language === 'te' ? 'శ్రీనివాస్ రావు' : 'Srinivas Rao')}
+                            </div>
+                            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                              ⭐ 4.9 • {activeRide.vehicleType.toUpperCase()}
+                            </div>
+                          </div>
+                          <div style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.2rem 0.4rem', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-color)', borderRadius: '3px', color: 'var(--text-main)' }}>
+                            {activeRide.driverId?.vehicleNumber || 'AP-16-MJ-9999'}
+                          </div>
+                        </div>
+
+                        {driverMessage && (
+                          <div style={{
+                            background: 'rgba(0, 242, 254, 0.08)',
+                            border: '1px solid rgba(0, 242, 254, 0.15)',
+                            borderRadius: 'var(--radius-sm)',
+                            padding: '0.4rem 0.6rem',
+                            fontSize: '0.7rem',
+                            color: 'var(--text-main)',
+                            lineHeight: 1.3,
+                            position: 'relative',
+                            marginTop: '0.2rem'
+                          }}>
+                            <span style={{ fontSize: '0.6rem', color: 'var(--primary)', fontWeight: 800, display: 'block', marginBottom: '0.1rem' }}>
+                              {language === 'te' ? 'డ్రైవర్ సందేశం:' : 'DRIVER CHAT:'}
+                            </span>
+                            {driverMessage}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     <div style={{ position: 'absolute', bottom: '15px', right: '15px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '5px 10px', borderRadius: '5px', zIndex: 10, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       {nearbyDrivers.length} cabs nearby
                     </div>
