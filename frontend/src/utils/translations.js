@@ -58,6 +58,15 @@ export const translations = {
     tierCategory: "Tier Category",
     creatingAccount: "Creating Account...",
     alreadyAccount: "Already have an account?",
+    forgotPassword: "Forgot Password?",
+    showPassword: "Show Password",
+    hidePassword: "Hide Password",
+    resetPasswordTitle: "Reset Password",
+    enterEmailReset: "Enter your registered email to set a new password",
+    newPassword: "New Password",
+    resetBtn: "Reset Password",
+    resetSuccess: "Password reset successfully! You can now login.",
+    backToLogin: "Back to Login",
 
     // User Dashboard
     reqRide: "Request Ride",
@@ -190,6 +199,15 @@ export const translations = {
     tierCategory: "వాహనం రకం",
     creatingAccount: "ఖాతాను సృష్టిస్తోంది...",
     alreadyAccount: "ఇప్పటికే ఖాతా ఉందా?",
+    forgotPassword: "పాస్‌వర్డ్ మర్చిపోయారా?",
+    showPassword: "పాస్‌వర్డ్ చూపించు",
+    hidePassword: "పాస్‌వర్డ్ దాచు",
+    resetPasswordTitle: "పాస్‌వర్డ్ రీసెట్ చేయండి",
+    enterEmailReset: "కొత్త పాస్‌వర్డ్ సెట్ చేయడానికి రిజిస్టర్డ్ ఇమెయిల్ ఎంటర్ చేయండి",
+    newPassword: "కొత్త పాస్‌వర్డ్",
+    resetBtn: "పాస్‌వర్డ్ రీసెట్",
+    resetSuccess: "పాస్‌వర్డ్ విజయవంతంగా రీసెట్ చేయబడింది! ఇప్పుడు లాగిన్ అవ్వండి.",
+    backToLogin: "లాగిన్‌కి తిరిగి వెళ్లు",
 
     // User Dashboard
     reqRide: "ప్రయాణాన్ని అభ్యర్థించండి",

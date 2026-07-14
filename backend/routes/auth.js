@@ -171,4 +171,45 @@ router.get('/me', protect, async (req, res, next) => {
   }
 });
 
+// @desc    Reset password (Forgot Password flow)
+// @route   POST /api/auth/reset-password
+// @access  Public
+router.post('/reset-password', async (req, res, next) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const sanitizedEmail = email ? email.toLowerCase().trim() : '';
+    const user = await User.findOne({ email: sanitizedEmail });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found with this email' });
+    }
+
+    // Encrypt new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    // Also update password in local JSON persistent backup
+    if (fs.existsSync(backupPath)) {
+      try {
+        let users = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
+        const index = users.findIndex(u => u.user.email === sanitizedEmail);
+        if (index !== -1) {
+          users[index].user.password = hashedPassword;
+          fs.writeFileSync(backupPath, JSON.stringify(users, null, 2), 'utf8');
+        }
+      } catch (err) {
+        console.error('Backup reset password update failed', err);
+      }
+    }
+
+    res.json({ message: 'Password reset successfully' });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

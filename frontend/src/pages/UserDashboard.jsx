@@ -92,8 +92,7 @@ export const UserDashboard = () => {
   const getReadableAddress = async (lat, lng) => {
     try {
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=12&accept-language=${language}`,
-        { headers: { 'User-Agent': 'UcabAPBookingApp/1.0' } }
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=12&accept-language=${language}`
       );
       const data = await response.json();
       const address = data.address;
@@ -913,16 +912,38 @@ export const UserDashboard = () => {
                         {language === 'en' ? 'Search Destination Area' : 'గమ్యస్థానాన్ని శోధించండి'}
                       </label>
                       <div style={{ position: 'relative' }}>
-                        <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                        <MapPin size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#ef4444' }} />
                         <input
                           type="text"
                           className="form-input"
-                          style={{ paddingLeft: '2.5rem' }}
-                          placeholder={language === 'en' ? "Search places via Google Places..." : "గూగుల్ మ్యాప్స్ ద్వారా స్థలాన్ని వెతకండి..."}
+                          style={{ paddingLeft: '2.5rem', paddingRight: '5.5rem' }}
+                          placeholder={language === 'en' ? "Search or click map to drop pin..." : "వెతకండి లేదా మ్యాప్‌ను క్లిక్ చేసి పిన్ చేయండి..."}
                           value={googleSearchQuery}
                           onChange={handleGoogleSearchChange}
                           onFocus={() => setShowGoogleDropdown(true)}
                         />
+                        <button 
+                          type="button" 
+                          onClick={() => {
+                            alert(language === 'en' ? "Tip: You can click anywhere directly on the map to drop a destination pin!" : "చిట్కా: గమ్యస్థాన పిన్‌ను ఉంచడానికి మ్యాప్‌పై ఎక్కడైనా నేరుగా క్లిక్ చేయవచ్చు!");
+                          }}
+                          style={{ 
+                            position: 'absolute', 
+                            right: '8px', 
+                            top: '50%', 
+                            transform: 'translateY(-50%)', 
+                            background: 'var(--primary-glow)', 
+                            border: '1px solid var(--primary)', 
+                            color: 'var(--primary)', 
+                            fontSize: '0.65rem', 
+                            padding: '4px 8px', 
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontWeight: '600'
+                          }}
+                        >
+                          {language === 'en' ? 'Pin Tool' : 'పిన్ టూల్'}
+                        </button>
                       </div>
 
                       {/* Autocomplete Dropdown list */}
