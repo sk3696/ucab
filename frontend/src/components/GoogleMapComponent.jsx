@@ -185,7 +185,7 @@ export const GoogleMapComponent = ({
         zoomControl: true,
       }}
       onClick={(e) => {
-        if (onMapClick) {
+        if (onMapClick && !status) {
           onMapClick(e.latLng.lat(), e.latLng.lng());
         }
       }}
@@ -204,9 +204,9 @@ export const GoogleMapComponent = ({
       {dropoff && (
         <Marker
           position={{ lat: dropoff.lat, lng: dropoff.lng }}
-          draggable={true}
+          draggable={!status}
           onDragEnd={(e) => {
-            if (onMapClick) {
+            if (onMapClick && !status) {
               onMapClick(e.latLng.lat(), e.latLng.lng());
             }
           }}

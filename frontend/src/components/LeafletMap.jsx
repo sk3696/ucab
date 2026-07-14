@@ -186,10 +186,15 @@ export const LeafletMap = ({ pickup, dropoff, driverRouteIndex, status, nearbyDr
 
       if (dropoffMarkerRef.current) {
         dropoffMarkerRef.current.setLatLng([dropoff.lat, dropoff.lng]);
+        if (status) {
+          dropoffMarkerRef.current.dragging?.disable();
+        } else {
+          dropoffMarkerRef.current.dragging?.enable();
+        }
       } else {
         dropoffMarkerRef.current = L.marker([dropoff.lat, dropoff.lng], { 
           icon: dropoffIcon,
-          draggable: true 
+          draggable: !status 
         }).addTo(map);
 
         // Bind tooltip to remind user they can drag it

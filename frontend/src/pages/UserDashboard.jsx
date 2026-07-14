@@ -250,6 +250,7 @@ export const UserDashboard = () => {
 
   // Click on map directly to drop destination pin coordinates
   const handleMapClick = async (lat, lng) => {
+    if (activeRide || isMatching) return;
     try {
       setSelectedDestination({
         name: `📍 ${language === 'en' ? 'Dropped Pin' : 'డ్రాప్ చేసిన పిన్'}`,
@@ -521,6 +522,23 @@ export const UserDashboard = () => {
     }
   };
 
+  const handleResetDashboard = () => {
+    setActiveRide(null);
+    setDriverProfile(null);
+    setPaymentSuccess(false);
+    setReceipt(null);
+    setGoogleSearchQuery('');
+    setSelectedDestination(null);
+    setEstimates(null);
+    setDistance(0);
+    setUpiStep('qr');
+    setIsMatching(false);
+    fetchHistory();
+    if (selectedDestination) {
+      fetchEstimatesForDestination(selectedDestination);
+    }
+  };
+
   const triggerUpiScanSimulation = () => {
     if (checkoutIntervalRef.current) {
       clearInterval(checkoutIntervalRef.current);
@@ -607,6 +625,13 @@ export const UserDashboard = () => {
     }
   };
 
+  // Fetch ride history when activeTab updates to history tab
+  useEffect(() => {
+    if (activeTab === 'history') {
+      fetchHistory();
+    }
+  }, [activeTab]);
+
   // Re-trigger location translation when language toggle is clicked
   useEffect(() => {
     if (userLocation) {
@@ -623,6 +648,7 @@ export const UserDashboard = () => {
 
   useEffect(() => {
     requestLocationAccess();
+    fetchHistory();
     
     const interval = setInterval(checkActiveRidePoll, 4000);
     return () => {
