@@ -123,6 +123,7 @@ export const UserDashboard = () => {
   const rideProgressIntervalRef = useRef(null);
   const matchingIntervalRef = useRef(null);
   const checkoutIntervalRef = useRef(null);
+  const searchTimeoutRef = useRef(null);
 
   // Fetch human-readable city/road name via OpenStreetMap Nominatim with dynamic language parameter
   const getReadableAddress = async (lat, lng) => {
@@ -276,7 +277,7 @@ export const UserDashboard = () => {
   };
 
   // Handle Google Maps Autocomplete Search input changes
-  const handleGoogleSearchChange = async (e) => {
+  const handleGoogleSearchChange = (e) => {
     const val = e.target.value;
     setGoogleSearchQuery(val);
     if (!val) {
@@ -293,42 +294,49 @@ export const UserDashboard = () => {
     setGoogleSuggestions(filtered);
     setShowGoogleDropdown(true);
 
-    // 2. Fetch live global coordinates from Nominatim
-    if (val.trim().length > 2) {
-      try {
-        const queryLanguage = language === 'en' ? 'en' : 'te';
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(val)}&countrycodes=in&limit=8&accept-language=${queryLanguage}`
-        );
-        const data = await response.json();
-        if (data && data.length > 0) {
-          const resolved = data.map(item => {
-            const namePart = item.display_name.split(',')[0];
-            return {
-              name: `📍 ${namePart}`,
-              address: item.display_name,
-              lat: parseFloat(item.lat),
-              lng: parseFloat(item.lon)
-            };
-          });
+    // Clear previous timeout to debounce the fetch
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
 
-          // Prevent duplicates
-          setGoogleSuggestions(prev => {
-            const combined = [...prev];
-            resolved.forEach(remote => {
-              if (!combined.some(local => 
-                Math.abs(local.lat - remote.lat) < 0.0001 && 
-                Math.abs(local.lng - remote.lng) < 0.0001
-              )) {
-                combined.push(remote);
-              }
+    // 2. Fetch live global coordinates from Nominatim (debounced by 450ms)
+    if (val.trim().length > 2) {
+      searchTimeoutRef.current = setTimeout(async () => {
+        try {
+          const queryLanguage = language === 'en' ? 'en' : 'te';
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(val)}&countrycodes=in&limit=8&accept-language=${queryLanguage}`
+          );
+          const data = await response.json();
+          if (data && data.length > 0) {
+            const resolved = data.map(item => {
+              const namePart = item.display_name.split(',')[0];
+              return {
+                name: `📍 ${namePart}`,
+                address: item.display_name,
+                lat: parseFloat(item.lat),
+                lng: parseFloat(item.lon)
+              };
             });
-            return combined.slice(0, 10);
-          });
+
+            // Prevent duplicates
+            setGoogleSuggestions(prev => {
+              const combined = [...prev];
+              resolved.forEach(remote => {
+                if (!combined.some(local => 
+                  Math.abs(local.lat - remote.lat) < 0.0001 && 
+                  Math.abs(local.lng - remote.lng) < 0.0001
+                )) {
+                  combined.push(remote);
+                }
+              });
+              return combined.slice(0, 10);
+            });
+          }
+        } catch (err) {
+          console.warn('Nominatim autocomplete search failed:', err);
         }
-      } catch (err) {
-        console.warn('Nominatim autocomplete search failed:', err);
-      }
+      }, 450);
     }
   };
 

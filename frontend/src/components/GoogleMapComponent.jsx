@@ -79,6 +79,8 @@ const containerStyle = {
   borderRadius: '14px',
 };
 
+const GOOGLE_MAPS_LIBRARIES = ['places'];
+
 export const GoogleMapComponent = ({ 
   pickup, 
   dropoff, 
@@ -93,7 +95,7 @@ export const GoogleMapComponent = ({
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
-    libraries: ['places']
+    libraries: GOOGLE_MAPS_LIBRARIES
   });
 
   const [map, setMap] = useState(null);
