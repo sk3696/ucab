@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import LeafletMap from '../components/LeafletMap';
+import GoogleMapComponent from '../components/GoogleMapComponent';
 import LiveBackground from '../components/LiveBackground';
 import { 
   MapPin, Navigation, Car, CreditCard, Clock, 
@@ -1160,14 +1161,28 @@ export const UserDashboard = () => {
                 {/* Map Display Card */}
                 <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '520px', padding: '0.5rem' }}>
                   <div style={{ flex: 1, position: 'relative' }}>
-                    <LeafletMap 
-                      pickup={userLocation} 
-                      dropoff={selectedDestination}
-                      nearbyDrivers={nearbyDrivers}
-                      vehicleType={vehicleType}
-                      onMapClick={handleMapClick}
-                      language={language}
-                    />
+                    {import.meta.env.VITE_GOOGLE_MAPS_API_KEY ? (
+                      <GoogleMapComponent
+                        pickup={userLocation} 
+                        dropoff={selectedDestination}
+                        nearbyDrivers={nearbyDrivers}
+                        vehicleType={vehicleType}
+                        onMapClick={handleMapClick}
+                        status={activeRide?.status}
+                        driverRouteIndex={activeRide?.driverRouteIndex}
+                      />
+                    ) : (
+                      <LeafletMap 
+                        pickup={userLocation} 
+                        dropoff={selectedDestination}
+                        nearbyDrivers={nearbyDrivers}
+                        vehicleType={vehicleType}
+                        onMapClick={handleMapClick}
+                        language={language}
+                        status={activeRide?.status}
+                        driverRouteIndex={activeRide?.driverRouteIndex}
+                      />
+                    )}
                     <div style={{ position: 'absolute', bottom: '15px', right: '15px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '5px 10px', borderRadius: '5px', zIndex: 10, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       {nearbyDrivers.length} cabs nearby
                     </div>
