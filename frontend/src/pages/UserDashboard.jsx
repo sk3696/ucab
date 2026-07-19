@@ -1143,7 +1143,7 @@ export const UserDashboard = () => {
                           
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                             {/* Bike */}
-                            <div onClick={() => setVehicleType('bike')} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'bike' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'bike' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            <div onClick={() => setVehicleType('bike')} className="category-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'bike' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'bike' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
                               <div>
                                 <strong>Bike Ride</strong>
                                 <span style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)' }}>Solo two-wheeler</span>
@@ -1152,7 +1152,7 @@ export const UserDashboard = () => {
                             </div>
 
                             {/* Scooty */}
-                            <div onClick={() => setVehicleType('scooty')} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'scooty' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'scooty' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            <div onClick={() => setVehicleType('scooty')} className="category-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'scooty' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'scooty' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
                               <div>
                                 <strong>Scooty</strong>
                                 <span style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)' }}>Light scooter</span>
@@ -1161,7 +1161,7 @@ export const UserDashboard = () => {
                             </div>
 
                             {/* Mini */}
-                            <div onClick={() => setVehicleType('mini')} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'mini' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'mini' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            <div onClick={() => setVehicleType('mini')} className="category-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'mini' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'mini' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
                               <div>
                                 <strong>Mini Hatchback</strong>
                                 <span style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)' }}>4 Seater Hatchback</span>
@@ -1170,7 +1170,7 @@ export const UserDashboard = () => {
                             </div>
 
                             {/* Economy */}
-                            <div onClick={() => setVehicleType('economy')} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'economy' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'economy' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            <div onClick={() => setVehicleType('economy')} className="category-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'economy' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'economy' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
                               <div>
                                 <strong>Economy Sedan</strong>
                                 <span style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)' }}>5 Seater standard sedan</span>
@@ -1179,7 +1179,7 @@ export const UserDashboard = () => {
                             </div>
 
                             {/* XL */}
-                            <div onClick={() => setVehicleType('xl')} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'xl' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'xl' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            <div onClick={() => setVehicleType('xl')} className="category-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.8rem', border: vehicleType === 'xl' ? '2px solid var(--primary)' : '1px solid var(--border-color)', background: vehicleType === 'xl' ? 'var(--primary-glow)' : 'rgba(255,255,255,0.01)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.8rem' }}>
                               <div>
                                 <strong>XL SUV</strong>
                                 <span style={{ display: 'block', fontSize: '0.7rem', color: 'var(--text-muted)' }}>7 Seater SUV XL</span>
