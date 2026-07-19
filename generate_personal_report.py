@@ -94,14 +94,16 @@ def create_personal_report(output_path):
     pdf.ln(1.5)
     
     contributions = [
-        ("Full-Stack Feature Integration", 
-         "Collaborated on frontend React route setups and backend controllers to connect ride-status updates and payment simulation APIs. Managed state sync between passenger ride requests and driver dashboards."),
-        ("System Quality Assurance & Integration Testing", 
-         "Created and executed system-wide integration test scenarios. Verified authorization controls on restricted API endpoints and tested ride matching sequences (Requested -> Accepted -> Arrived -> Started -> Completed)."),
+        ("Geolocation & Geocoding Integrations", 
+         "Integrated live HTML5 Geolocation API parameters to resolve passenger locations; hooked up Nominatim search engine to query dynamic location addresses in English/Telugu."),
+        ("Dynamic Street Curves Routing", 
+         "Configured OSRM street paths parsing logic into LeafletMap to draw routes tracing curves instead of straight lines, and set smooth linear transitions on vehicle markers."),
+        ("Google Maps Wrapper Implementation", 
+         "Architected a unified mapping container supporting dynamic switches between open-source Leaflet and official Google Maps wrappers via environment variables."),
+        ("Persistent JSON Backups Synchronizer", 
+         "Programmed local JSON backups file data sync handlers on backend authentication controllers, preventing registration resets upon DB restarts."),
         ("Error Diagnosis & Code Debugging", 
-         "Identified and debugged rendering loops in the React state machine, resolved driver online/offline toggling bugs, and corrected database model validation checks in the Express backend."),
-        ("Technical Documentation Compilation", 
-         "Architected the project documentation including database model schemas, API endpoint specifications, and local installation manuals to ensure developer onboarding is clean.")
+         "Resolved script-reloading loops in useJsApiLoader hook, debounced autocomplete suggestions, fixed payment schema enums validation checks, and corrected CSS stacking navbar panels.")
     ]
     
     for title, desc in contributions:
@@ -125,17 +127,17 @@ def create_personal_report(output_path):
     pdf.set_text_color(30, 41, 59)
     pdf.write(4.2, "Frontend Stack: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.2, "Built with React.js (Vite framework) with responsive styled dashboards, centralized contexts for global auth state, and Axios for handling API communications.\n")
+    pdf.write(4.2, "Built with React.js (Vite framework) with responsive styled dashboards, centralized contexts for global auth state, Google Maps SDK wrapper, and Axios.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.2, "Backend Stack: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.2, "Node.js and Express.js REST APIs utilizing custom middleware for JWT generation, route guarding, and unified error handling.\n")
+    pdf.write(4.2, "Node.js and Express.js REST APIs utilizing custom middleware for JWT generation, route guarding, persistent JSON database logs sync handlers, and unified error handling.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.2, "Database Layer: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.2, "MongoDB with Mongoose schemas for User, Driver, Ride, Payment, and Support models, running on MongoDB Memory Server for isolated testing.\n")
+    pdf.write(4.2, "MongoDB Atlas cloud storage using Mongoose ODM schemas for User, Driver, Ride, Payment, and Support models.\n")
     
     pdf.ln(3)
     
@@ -148,7 +150,7 @@ def create_personal_report(output_path):
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.2, "Setup Phase: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.2, "Install Node.js (v18+) and execute 'npm run install-all' from the project root to configure dependencies in both directories. Manage local configuration using backend environment parameters.\n")
+    pdf.write(4.2, "Install Node.js (v18+) and execute 'npm run install-all' from the project root to configure dependencies in both directories. Add environment variables for cloud DB and maps keys.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.2, "Execution Phase: ")
@@ -187,7 +189,7 @@ def create_personal_report(output_path):
     pdf.ln(1.5)
     
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.2, "For future releases, my focus will be on integrating the Google Maps SDK for real-time map plots and live GPS routing, implementing WebSockets (Socket.io) for live coordination, upgrading mock payments to Stripe checkout elements, and wrapping the dashboards in a React Native codebase.\n")
+    pdf.write(4.2, "For future releases, my focus will be on integrating real-time coordinate streaming using WebSockets (Socket.io), adding production Stripe payment gateway integrations, and wrapping the responsive React dashboard within a cross-platform React Native app.\n")
     
     print("Page 2 End Y:", pdf.get_y())
     

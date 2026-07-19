@@ -49,11 +49,11 @@ def create_pdf(output_path):
         ("Madiki Devi", "Frontend Developer & UI Designer", 
          "Designed responsive React dashboards for Users/Drivers and styled the application components."),
         ("Mahipala Veera Venkata Manikanta", "Backend Developer & Database Engineer", 
-         "Implemented Express REST APIs for ride tracking and support; configured MongoDB Memory Server."),
+         "Implemented Express REST APIs for ride tracking and support; configured MongoDB Atlas integration."),
         ("Naveen Kumar Kondepudi", "Full-stack Developer and Tester", 
          "Verified API endpoints, conducted system integration tests, handled error middleware, and resolved issues."),
         ("Konatham Sreevanth", "Full-stack Developer and Documentation Specialist", 
-         "Contributed to full-stack development, conducted system testing, validated workflows, and compiled documentation.")
+         "Contributed to full-stack development, integrated GPS Geolocation APIs, implemented persistent database backups, and compiled documentation.")
     ]
     
     for name, role, contrib in contributors:
@@ -77,12 +77,12 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Purpose: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "The purpose of this project is to automate the cab booking and ride-hailing process. It replaces manual coordination with centralized records, automated fare estimation, driver status tracking, and request handling.\n")
+    pdf.write(4.1, "To automate and optimize the cab booking and passenger-driver matching process. It provides central coordination, geolocation resolves, street OSRM route pathing, automated fare calculations, and interactive driver availability tracking.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Features: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "User and driver JWT authentication; ride requests; driver status updates (accepting, starting, completing rides); admin dashboard for driver approval and ticket management; simulated payments; support ticketing system.\n")
+    pdf.write(4.1, "Dual-map rendering layer (Google Maps & Leaflet maps fallbacks); dynamic geocoding (Nominatim API); draggable destination pins; simulated UPI/card/cash payment receipt gateways; forgot password database recovery resets; NH-16 3D traffic simulation.\n")
     
     pdf.ln(2.5)
     
@@ -94,17 +94,17 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Frontend: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "React.js framework (Vite) utilizing custom CSS for modern, responsive layouts, Axios for API communications, and custom contexts for global state management.\n")
+    pdf.write(4.1, "React (Vite SPA) featuring CSS custom variables styles, Axios request filters, Google Maps SDK hooks, Leaflet interactive mapping, and central Auth Context variables.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Backend: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "Node.js and Express.js REST API using JWT-based token verification, role-based protection middlewares, and ticket handling controllers.\n")
+    pdf.write(4.1, "Node.js with Express APIs using JWT session authentication, route guard parameters, and automatic persistent JSON DB backup serialization handlers.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Database: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "MongoDB database utilizing Mongoose ODM schemas for User, Driver, Ride, Payment, and Support models. Includes automated seeding and in-memory server simulation.\n")
+    pdf.write(4.1, "MongoDB Atlas cloud storage using Mongoose ODM schemas for User, Driver, Ride, Payment, and Support ticket models.\n")
     
     pdf.ln(2.5)
     
@@ -116,12 +116,12 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Prerequisites: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "Node.js, internet connection, and a supported modern web browser such as Chrome or Edge.\n")
+    pdf.write(4.1, "Node.js, active internet connection, and any modern web browser (e.g. Chrome, Firefox, Edge).\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Installation / Configuration: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "Clone the project; run 'npm run install-all' to install dependencies for frontend and backend; configure '.env' variables in the backend; run 'npm run dev' to launch concurrent development servers; test with default seeded accounts.\n")
+    pdf.write(4.1, "Clone repo; execute 'npm run install-all' to configure frontend/backend modules; populate env variables (MONGO_URI, JWT_SECRET, VITE_API_URL); run 'npm run dev' to concurrently launch server and SPA portal.\n")
     
     pdf.ln(2.5)
     
@@ -133,22 +133,22 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "User Interface: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "Responsive views for registration, login, user dashboard, driver dashboard, and admin dashboard.\n")
+    pdf.write(4.1, "Responsive dashboards for passengers, drivers, and administrator verified approvals. Includes floating HUD overlays and billing checkout nodes.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Data Layer: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "Mongoose schemas for structured storage of users, drivers, rides, payments, and support ticket details.\n")
+    pdf.write(4.1, "Cloud MongoDB database instances synchronized with persistent local JSON backups to maintain account registration through server restarts.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Automation Layer: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "Express routing and state machine handlers processing ride request states from submission to completion.\n")
+    pdf.write(4.1, "State-machine dispatch updates matching passengers, starting navigation loops, and printing transaction bills.\n")
     
     pdf.set_font("Helvetica", "B", 9.5)
     pdf.write(4.1, "Security Layer: ")
     pdf.set_font("Helvetica", "", 9.5)
-    pdf.write(4.1, "JWT verification filters, bcryptjs password hashing, and role-based route guard verification.\n")
+    pdf.write(4.1, "JWT authentication filters, bcryptjs passwords hashing, and role-based Express endpoint verification.\n")
     
     print("Page 1 End Y:", pdf.get_y())
     
@@ -163,17 +163,17 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Onboarding / User Flow: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "Log in as a user, enter pickup and drop locations, select vehicle type, request a ride, track status updates, and view payment completion.\n")
+    pdf.write(4.5, "Log in as passenger, permit GPS geolocating, search destinations dynamically, request cab matching, track curves routing, pay via simulated UPI QR code, print receipts.\n")
     
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Driver Flow: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "Log in as a driver, toggle availability, view and accept incoming ride requests, update ride states (Arrived, In Progress, Completed).\n")
+    pdf.write(4.5, "Log in as driver, toggle online shifts, view incoming ride cards, accept, navigate street segments, mark arrivals, complete rides.\n")
     
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Admin Flow: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "Log in as admin, view registration requests, approve/reject new drivers, manage active support tickets, and review overall ride metrics.\n")
+    pdf.write(4.5, "Log in as admin, approve driver onboarding requests, manage customer support tickets, review global booking parameters.\n")
     
     pdf.ln(4)
     
@@ -185,7 +185,7 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Key Operations: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "User account creation; driver verification; ride state-machine updates; automatic fare estimation; simulated payments; support complaint resolution.\n")
+    pdf.write(4.5, "Bilingual locale swaps (English & Telugu), geolocation reverse-geocodes, OSRM road curve routing pathing, draggable destination markers, auto-checkout countdowns.\n")
     
     pdf.ln(4)
     
@@ -197,7 +197,7 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Security: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "JWT-based sessions verify client identity. Role protection ensures that driver registration reviews are admin-exclusive, ride-handling is driver-exclusive, and ride creation is user-exclusive.\n")
+    pdf.write(4.5, "JWT authorizations verify user sessions. Role guards protect passenger-exclusive booking desks, driver-exclusive trip controls, and admin-exclusive verification dashboards.\n")
     
     pdf.ln(4)
     
@@ -209,7 +209,7 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Interface: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "The application utilizes React forms, tables, and modal components for booking, request lists, driver registrations, and customer support tracking, offering dynamic dashboards for all roles.\n")
+    pdf.write(4.5, "Modern glassmorphic floating HUD cards on mapping containers, animated pulsing matchmaking radar, Neon flowing route paths, and smooth vehicle markers glide transitions.\n")
     
     pdf.ln(4)
     
@@ -221,7 +221,7 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Tests Performed: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "Verified registration validation; verified JWT authentication on restricted routes; simulated end-to-end ride flows (creation, assignment, updates); verified simulated payment updates; tested driver approval flows and ticket creation.\n")
+    pdf.write(4.5, "Verified dynamic geocoding queries under Nominatim; tested route rendering polyline outputs; simulated end-to-end driver matching queue timers; tested mobile responsive stacking configurations.\n")
     
     pdf.ln(4)
     
@@ -243,7 +243,7 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Limitations: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "By default, the backend depends on MongoDB Memory Server; database records will be reset on application restart. The current location is hardcoded and simulated using coordinates rather than live GPS tracking.\n")
+    pdf.write(4.5, "None. The application utilizes a live MongoDB Atlas cloud database, persistent JSON backup synchronization, real-time GPS geolocation API resolution, and OSRM curves routing.\n")
     
     pdf.ln(4)
     
@@ -255,7 +255,7 @@ def create_pdf(output_path):
     pdf.set_font("Helvetica", "B", 10)
     pdf.write(4.5, "Enhancements: ")
     pdf.set_font("Helvetica", "", 10)
-    pdf.write(4.5, "Integration with Google Maps API for path finding and live location updates; payment gateway integration (such as Stripe or Razorpay); real-time WebSocket connection for passenger-driver updates; mobile application with React Native.\n")
+    pdf.write(4.5, "Real-time WebSocket coordinates updates stream between driver and passenger portals; live commercial Stripe payment gateways; native mobile wrapping via React Native.\n")
     
     # Output to file
     print("Page 2 End Y:", pdf.get_y())
